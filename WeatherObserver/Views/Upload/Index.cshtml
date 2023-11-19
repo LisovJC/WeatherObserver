@@ -1,0 +1,21 @@
+@using WeatherProcessor.Models
+@model UploadModel
+
+<div class="text-lg-start">
+    <h5 class="display-4" style="font-size: 24px">Загрузка Excel файла</h5>
+    <form method="post" enctype="multipart/form-data" style="margin-top: 30px">
+        <p style="margin-right: 5px"><input type="file" multiple name="files"/></p>
+        <p><input type="submit" value="Загрузить" /></p>
+    </form>
+    @if (Model is not null)
+    {
+        @if (Model.IsUploadFailed)
+        {
+            <p class="bg-warning">Файлы @Model.FileName не загружены. Они уже есть в базе данных, либо: ошибка расширения или шаблона данных!</p>
+        }
+        else
+        {
+            <p class="bg-success">Файлы @Model.FileName загружены успешно</p>
+        }
+    }
+</div>

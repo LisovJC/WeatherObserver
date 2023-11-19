@@ -1,0 +1,109 @@
+﻿@model WeatherShowModel
+@{
+}
+@if (Model.SelectYear == -1 && Model.SelectMonth == "-1")
+{
+    <h1>Архив погодных данных за все года:</h1>
+}
+else if (Model.SelectYear != -1 && Model.SelectMonth == "-1")
+{
+    <h1>Архив погодных данных за @Model.SelectYear год (все месяцы):</h1>
+}
+else if (Model.SelectYear != -1 && Model.SelectMonth != "-1")
+{
+    <h1>Архив погодных данных за @Model.SelectYear год (@Model.SelectMonth):</h1>
+}
+
+<form>
+    <select name="year">
+        @foreach (var year in @Model.Years)
+        {
+            if (year == Model.SelectYear)
+            {
+                <option selected value="@year">@year</option>
+            }
+            else
+            {
+                <option value="@year">@year</option>
+            }
+        }
+        @if (Model.SelectYear == -1)
+        {
+            <option selected value="-1">Не выбрано</option>
+        }
+        else
+        {
+            <option value="-1">Не выбрано</option>
+        }
+    </select>
+    <select name="month">
+        @foreach (var month in @Model.Months)
+        {
+            if (month == Model.SelectMonth)
+            {
+                <option selected value="@month">@month</option>
+            }
+            else
+            {
+                <option value="@month">@month</option>
+            }
+        }
+        @if (Model.SelectMonth == "-1")
+        {
+            <option selected value="-1">Не выбрано</option>
+        }
+        else
+        {
+            <option value="-1">Не выбрано</option>
+        }
+    </select>
+    <p style="margin-top:10px"><input type="submit" value="Отфильтровать" /></p>
+
+</form>
+    
+@if(Model.Reports.Count != 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Время Московское</th>
+                <th>Т</th>
+                <th>Отн. влажность воздуха, %</th>
+                <th>Тd</th>
+                <th>Атм. давление, мм рт.ст.</th>
+                <th>Направление ветра</th>
+                <th>Скорость ветра, м/с</th>
+                <th>Облачность, %</th>
+                <th>h</th>
+                <th>VV</th>
+                <th>Погодные явления</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var data in Model.Reports)
+            {
+                <tr>
+                    <th>@data.Date.ToString("d")</th>
+                    <th>@data.Time</th>
+                    <th>@data.Temperature</th>
+                    <th>@data.RelativeHumidity</th>
+                    <th>@data.DewPoint</th>
+                    <th>@data.AtmosphericPressure</th>
+                    <th>@data.WindDirection</th>
+                    <th>@data.WindSpeed</th>
+                    <th>@data.CloudCover</th>
+                    <th>@data.LowerСloudLimit</th>
+                    <th>@data.HorizontalVisibility</th>
+                    <th>@data.WeatherPhenomena</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Данные пусты</p>
+}
+
+
